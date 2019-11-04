@@ -1,0 +1,67 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootswatch/cyborg/bootstrap.min.css';
+@import '@grapecity/wijmo.styles/themes/wijmo.theme.cyborg.css';
+
+body
+{
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.panel {
+    margin-bottom: 0;
+}
+
+.panel-heading {
+    height: 43px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    -webkit-app-region: drag;
+}
+
+.panel-heading button {
+    -webkit-app-region: no-drag;
+}
+
+.panel-heading .window-buttons button {
+    margin-left: 10px;
+    font-family: serif;
+}
+
+.panel-heading .window-buttons button:focus {
+    outline: none;
+}
+
+.panel-body {
+    height: calc(100vh - 45px);
+    padding: 0;
+    overflow: auto;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+.h-16 {
+    height: 16px;
+}
+
+/* customize appearance of chart selection */
+.wj-flexchart {
+    border: none;
+    margin: 0;
+    padding-top: 0;
+    padding-right: 0;
+    height: calc(100% - 5px);
+    overflow: hidden;
+}
+
+.wj-flexchart .wj-state-selected {
+    stroke-width: 6px;
+}

@@ -1,0 +1,30 @@
+{
+    "devtools_port": 9090,
+    "startup_app": {
+        "name": "Stock Portfolio",
+        "description": "A financial OpenFin application that was developed using GrapeCity's Wijmo controls",
+        "url": "http://localhost:4200",
+        "uuid": "3f1eb5a5-0ad9-4bf2-9660-0a5719c11c5c",
+        "autoShow": true,
+        "saveWindowState": true,
+        "taskbarIconGroup": "ade6c57c-14f2-4c6d-802b-bee130ca432d",
+        "maximizable": false,
+        "frame": false
+    },
+    "runtime": {
+        "arguments": "",
+        "version": "stable"
+    },
+    "shortcut": {
+        "company": "GrapeCity",
+        "description": "A financial OpenFin application that was developed using GrapeCity's Wijmo controls",
+        "icon": "http://localhost:4200/favicon.ico",
+        "name": "Stock Portfolio"
+    },
+    "services": [ {"name": "layouts"} ],
+    "features": {
+        "snap": true,
+        "dock": true,
+        "tab": true
+    }
+}
