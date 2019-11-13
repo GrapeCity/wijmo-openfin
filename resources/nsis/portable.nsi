@@ -62,8 +62,10 @@ Section
   System::Call 'Kernel32::SetEnvironmentVariable(t, t)i ("PORTABLE_EXECUTABLE_FILE", "$EXEPATH").r0'
   System::Call 'Kernel32::SetEnvironmentVariable(t, t)i ("PORTABLE_EXECUTABLE_APP_FILENAME", "${APP_NAME}").r0'
   
-  ExecWait "$INSTDIR\${APP_EXECUTABLE_FILENAME}" $0
+  nsExec::ExecToStack "$INSTDIR\${APP_EXECUTABLE_FILENAME}"
+  Pop $0
   SetErrorLevel $0
   
   SetOutPath $PLUGINSDIR
+  RMDir /r $INSTDIR
 SectionEnd

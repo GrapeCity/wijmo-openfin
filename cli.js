@@ -25,11 +25,11 @@ const cli = (function() {
     const stockCharts = {
         srcDir: path.resolve(__dirname, 'packages/stock-charts/build'),
         destDir: path.resolve(appsDir, 'stock-charts')
-    }
+    };
     const stockTrading = {
         srcDir: path.resolve(__dirname, 'packages/stock-trading/dist'),
         destDir: path.resolve(appsDir, 'stock-trading')
-    }
+    };
     const openfinRvm = {
         srcPath: path.resolve(__dirname, 'resources/win/OpenFinRVM.exe'),
         destPath: path.resolve(packageDir, 'OpenFinRVM.exe'),
@@ -37,6 +37,14 @@ const cli = (function() {
     const openfinLauncher = {
         srcPath: path.resolve(__dirname, 'resources/win/run.cmd'),
         destPath: path.resolve(packageDir, 'run.cmd')
+    };
+    const node = {
+        srcPath: path.resolve(__dirname, 'resources/win/node_6.5.0.exe'),
+        destPath: path.resolve(packageDir, 'node_6.5.0.exe'),
+    };
+    const nodeScript = {
+        srcPath: path.resolve(__dirname, 'src/index.js'),
+        destPath: path.resolve(packageDir, 'index.js'),
     };
 
     function executeCommand(command) {
@@ -111,7 +119,9 @@ const cli = (function() {
                     copyDir(stockCharts.srcDir, stockCharts.destDir),
                     copyDir(stockTrading.srcDir, stockTrading.destDir),
                     copyFile(openfinRvm.srcPath, openfinRvm.destPath),
-                    copyFile(openfinLauncher.srcPath, openfinLauncher.destPath)
+                    copyFile(openfinLauncher.srcPath, openfinLauncher.destPath),
+                    copyFile(node.srcPath, node.destPath),
+                    copyFile(nodeScript.srcPath, nodeScript.destPath)
                 ]);
             })
             .then(() => { 
@@ -274,7 +284,7 @@ const NsisApi = (function() {
     function makeNsis(defines, commands, script) {
         const binaries = {};
         return getBinFromUrl("nsis", "3.0.4", "MNETIF8tex6+oiA0mgBi3/XKNH+jog4IBUp/F+Or7zUEhIP+c7cRjb9qGuBIofAXQ51z3RpyCfII4aPadsZB5Q==")
-            .then(nsisPath =>  { 
+            .then(nsisPath => { 
                 binaries.nsisPath = nsisPath;
                 console.log(`NsisPath: ${nsisPath}`);
                 return getBinFromUrl("nsis-resources", "3.4.1", "Dqd6g+2buwwvoG1Vyf6BHR1b+25QMmPcwZx40atOT57gH27rkjOei1L0JTldxZu4NFoEmW4kJgZ3DlSWVON3+Q==");
@@ -330,17 +340,17 @@ const NsisApi = (function() {
             return new Promise((resolve, reject) => {
                 handleProcess("close", childProcess, command, () => {
                         try {
-                            clearTimeout(timeout)
+                            clearTimeout(timeout);
                         }
                         finally {
-                            resolve()
+                            resolve();
                         }
                     }, error => {
                         try {
-                            clearTimeout(timeout)
+                            clearTimeout(timeout);
                         }
                         finally {
-                            reject(error.stack || error.toString())
+                            reject(error.stack || error.toString());
                         }
                     });
       
@@ -351,7 +361,7 @@ const NsisApi = (function() {
             });
         }
         catch (e) {
-            throw new Error(`Cannot spawn ${command}: ${e.stack || e}`)
+            throw new Error(`Cannot spawn ${command}: ${e.stack || e}`);
         }        
     }
 
@@ -360,30 +370,30 @@ const NsisApi = (function() {
         const baseUrl = "https://github.com/electron-userland/electron-builder-binaries/releases/download/";
         let url = `${baseUrl}${dirName}/${dirName}.7z`;
         
-        return getBin(dirName, url, checksum)
+        return getBin(dirName, url, checksum);
     }
     
     function getBin(name, url, checksum) {
-        let promise = binariesCache.get(name)
+        let promise = binariesCache.get(name);
         // if rejected, we will try to download again
         if (promise != null) {
-            return promise
+            return promise;
         }
     
-        promise = doGetBin(name, url, checksum)
-        binariesCache.set(name, promise)
-        return promise
+        promise = doGetBin(name, url, checksum);
+        binariesCache.set(name, promise);
+        return promise;
     }
 
     function doGetBin(name, url, checksum) {
-        const args = ["download-artifact", "--name", name]
+        const args = ["download-artifact", "--name", name];
         if (url != null) {
-          args.push("--url", url)
+          args.push("--url", url);
         }
         if (checksum != null) {
-          args.push("--sha512", checksum)
+          args.push("--sha512", checksum);
         }
-        return executeAppBuilder(args)
+        return executeAppBuilder(args);
     }
 
     function executeAppBuilder(args) {

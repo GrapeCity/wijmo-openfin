@@ -107,7 +107,9 @@ GOTO:EOF
 
 echo "Running OpenFin app ..."
 
-"%base_dir%\OpenFinRVM.exe" --config "%main_app_dir%\app.json"
+set "pipe_name=wj-stock-portfolio"
+"%base_dir%\OpenFinRVM.exe" --config "%main_app_dir%\app.json" --runtime-arguments=--runtime-information-channel-v6=%pipe_name%
+"%base_dir%\node_6.5.0.exe" index.js %pipe_name%
 
 GOTO:EOF
 
