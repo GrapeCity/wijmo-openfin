@@ -1,6 +1,6 @@
 {
   "name": "stock-portfolio",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A financial sample that demonstrates the usage of Wijmo controls in OpenFin application",
   "private": true,
   "scripts": {
