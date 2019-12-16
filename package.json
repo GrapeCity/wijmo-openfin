@@ -8,7 +8,7 @@
     "start-stock-portfolio": "cd packages/stock-portfolio && npm run start",
     "serve-stock-charts": "cd packages/stock-charts && npm run serve",
     "serve-stock-trading": "cd packages/stock-trading && npm run serve",
-    "portable": "npm run build-portable && npm run test-portable", 
+    "portable": "npm run build-portable && npm run test-portable",
     "test-portable": "cd build && stock-portfolio-%npm_package_version%.exe",
     "build-portable": "npm run build-package && node cli.js --build-portable",
     "package": "npm run build-package && npm run test-package",

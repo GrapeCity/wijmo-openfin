@@ -44,7 +44,7 @@
     "@grapecity/wijmo.styles": "~5.20192.624",
     "bootstrap": "3.4.1",
     "bootswatch": "3.4.1",
-    "openfin-layouts": "^1.0.5",
+    "openfin-layouts": "^1.2.0",
     "rxjs": "~6.4.0",
     "stock-core": "file:../stock-core",
     "tslib": "^1.10.0",
