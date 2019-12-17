@@ -1,5 +1,5 @@
 <div class="panel panel-default" *ngIf="portfolio">
-  <div class="panel-heading">
+  <div class="panel-heading" [ngStyle]="{'box-shadow': (current ? '0px 0px 20px ' + current.color : 'none')}">
     <div class="align-center">
         <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;{{title}}
     </div>

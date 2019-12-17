@@ -25,7 +25,8 @@ class App extends React.Component {
 
     
     this.state = {
-      chartPeriod: ChartPeriod.m12
+      chartPeriod: ChartPeriod.m12,
+      chartColor: null
     };
   }
 
@@ -68,12 +69,14 @@ class App extends React.Component {
     switch(this.state.chartName) {
       case 'hloc':
         return <HlocChart period={this.state.chartPeriod} 
-                          onPeriodChange={(p) => this.changeChartPeriod(p)} 
+                          onPeriodChange={(p) => this.changeChartPeriod(p)}
+                          onColorChange={(c) => this.changeChartColor(c)}
                           storageKey={Config.HLOC_STGKEY} />;
 
       case 'trendline':
         return <TrendlineChart period={this.state.chartPeriod} 
-                          onPeriodChange={(p) => this.changeChartPeriod(p)} 
+                          onPeriodChange={(p) => this.changeChartPeriod(p)}
+                          onColorChange={(c) => this.changeChartColor(c)}
                           storageKey={Config.TRENDLINE_STGKEY} />;
 
       default:
@@ -82,9 +85,13 @@ class App extends React.Component {
   }
 
   render() {
+    const chartColor = this.state.chartColor
+    const headerStyle = {
+      boxShadow: chartColor ? '0px 0px 20px ' + chartColor : 'none'
+    };
     return (
       <div className="panel panel-default">
-        <div className="panel-heading">
+        <div className="panel-heading" style={headerStyle}>
           <div className="align-center">
             <img className="h-16" src={financeLogo} alt="app logo" />&nbsp;&nbsp;{this.state.title}
           </div>
@@ -112,9 +119,15 @@ class App extends React.Component {
     return this.state.chartPeriod === value;
   }
 
-  changeChartPeriod(value){
+  changeChartPeriod(value) {
     this.setState({
       chartPeriod: value
+    });
+  }
+
+  changeChartColor(value) {
+    this.setState({
+      chartColor: value
     });
   }
 

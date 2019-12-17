@@ -20,6 +20,7 @@ export class StockChangesChartComponent {
   _reconnecting: boolean = false;
 
   portfolio: Portfolio;
+  current: any;
 
   @ViewChild('chart', { static: false }) chart: wjcChart.FlexChart;
 
@@ -134,6 +135,8 @@ export class StockChangesChartComponent {
   private _currentChanged(symbol) {
     console.log('Channels: received message "currentChanged"');
     
+    this.current = this.portfolio.view.items.find(pi => pi.symbol == symbol);
+
     const chart = this.chart;
     if (chart) {
         let selSeries = null;

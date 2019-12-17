@@ -30,6 +30,7 @@ class Chart extends React.Component {
     });
 
     this.props.onPeriodChange(this._portfolio.chartPeriod);
+    this.props.onColorChange(null);
 
     this._initChannel();
   }
@@ -159,9 +160,12 @@ class Chart extends React.Component {
   _currentChanged(symbol) {
     console.log('Channels: received message "currentChanged"');
     
+    /* eslint-disable-next-line eqeqeq */
+    const current = this._portfolio.view.items.find(pi => pi.symbol == symbol);
+
+    this.props.onColorChange(current.color);
     this.setState({
-      /* eslint-disable-next-line eqeqeq */
-      current: this._portfolio.view.items.find(pi => pi.symbol == symbol)
+      current
     });
   }
 }
