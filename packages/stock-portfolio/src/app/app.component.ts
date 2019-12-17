@@ -109,12 +109,11 @@ export class AppComponent {
     }
 
     private _displayNotification(message: string) {
-        const favicon = <HTMLLinkElement> document.querySelector('link[rel="icon"]');
         Notifications.create({
             title: 'Portfolio History',
             body: message,
             category: 'Portfolio History',
-            icon: favicon.href
+            icon: 'favicon.ico'
         });
     }
 

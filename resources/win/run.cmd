@@ -41,7 +41,10 @@ echo        "description": "A financial OpenFin application that was developed u
 echo        "icon": "%main_app_url%/favicon.ico",
 echo        "name": "Stock Portfolio"
 echo    },
-echo    "services": [ {"name": "layouts"} ],
+echo    "services": [
+echo        {"name": "layouts"},
+echo        {"name": "notifications"}
+echo    ],
 echo    "features": {
 echo        "snap": true,
 echo        "dock": true,
