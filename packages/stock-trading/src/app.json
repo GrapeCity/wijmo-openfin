@@ -18,7 +18,10 @@
         "icon": "http://localhost:3300/favicon.ico",
         "name": "Stock Trading"
     },
-    "services": [ {"name": "layouts"} ],
+    "services": [ 
+        {"name": "layouts"},
+        {"name": "notifications"}
+    ],
     "features": {
         "snap": true,
         "dock": true,

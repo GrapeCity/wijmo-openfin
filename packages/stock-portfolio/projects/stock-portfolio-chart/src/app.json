@@ -18,7 +18,10 @@
         "icon": "http://localhost:4300/favicon.ico",
         "name": "Stock Chart"
     },
-    "services": [ {"name": "layouts"} ],
+    "services": [ 
+        {"name": "layouts"},
+        {"name": "notifications"}
+    ],
     "features": {
         "snap": true,
         "dock": true,

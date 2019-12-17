@@ -28,7 +28,7 @@
                       [selectionMode]="'Row'">
             <wj-flex-grid-column [header]="''" [isReadOnly]="true" [width]="50" [align]="'center'">
                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                    <a href="#" (click)="portfolio.removeItem(cell.item.symbol)" [wjTooltip]="'Remove'" class="action-remove">
+                    <a href="#" (click)="removeExistingItem(cell.item.symbol)" [wjTooltip]="'Remove'" class="action-remove">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </ng-template>
@@ -76,7 +76,7 @@
                 </wj-auto-complete>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-primary"
-                            (click)="portfolio.addNewItem()"
+                            (click)="addNewItem()"
                             [disabled]="!portfolio.canAddNewItem()">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>

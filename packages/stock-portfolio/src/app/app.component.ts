@@ -1,6 +1,7 @@
 ﻿import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import * as wjcInput from '@grapecity/wijmo.input';
 import { ChannelProvider } from 'openfin/_v2/api/interappbus/channel/provider';
+import * as Notifications from 'openfin-notifications';
 
 import { ChannelName, ChannelTopics } from 'stock-core';
 import { Config } from './data/config';
@@ -94,6 +95,27 @@ export class AppComponent {
 
     getChangeGlyphClass(amount: number): string {
         return amount < -0.01 ? 'wj-glyph-down' : amount > 0.01 ? 'wj-glyph-up' : 'wj-glyph-circle';
+    }
+
+    addNewItem() {
+        const symbol = this.portfolio.newItemSymbol;
+        this.portfolio.addNewItem();
+        this._displayNotification(`Stock ${symbol} has been added`);
+    }
+
+    removeExistingItem(symbol) {
+        this.portfolio.removeItem(symbol);
+        this._displayNotification(`Stock ${symbol} has been removed`);
+    }
+
+    private _displayNotification(message: string) {
+        const favicon = <HTMLLinkElement> document.querySelector('link[rel="icon"]');
+        Notifications.create({
+            title: 'Portfolio History',
+            body: message,
+            category: 'Portfolio History',
+            icon: favicon.href
+        });
     }
 
     private _initChannel() {

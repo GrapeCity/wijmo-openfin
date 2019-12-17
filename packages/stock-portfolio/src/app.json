@@ -21,7 +21,10 @@
         "icon": "http://localhost:4200/favicon.ico",
         "name": "Stock Portfolio"
     },
-    "services": [ {"name": "layouts"} ],
+    "services": [ 
+        {"name": "layouts"},
+        {"name": "notifications"}
+    ],
     "features": {
         "snap": true,
         "dock": true,
