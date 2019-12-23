@@ -18,6 +18,7 @@ body
     justify-content: space-between;
     padding: 10px;
     -webkit-app-region: drag;
+    transition: background-color linear 0.5s;
 }
 
 .panel-heading button {
@@ -54,6 +55,38 @@ body
     margin: 0;
     padding-top: 0;
     padding-right: 0;
-    height: calc(100% - 5px);
+    height: 100%;
     overflow: hidden;
+}
+
+.chart-container {
+    height: calc(100% - 5px);
+}
+
+.chart-container.fadein {
+    animation: fadein ease-out 0.5s;
+}
+
+.chart-container.fadeout {
+    animation: fadeout ease-in 0.5s;
+}
+
+@keyframes fadein {
+    from {
+      opacity: 1;
+    }
+    
+    to {
+      opacity: 0;
+    }
+}
+  
+@keyframes fadeout {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

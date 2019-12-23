@@ -20,7 +20,8 @@ export class StockChangesChartComponent {
   _reconnecting: boolean = false;
 
   portfolio: Portfolio;
-  current: any;
+  currentColor: any;
+  currentSymbol: string;
 
   @ViewChild('chart', { static: false }) chart: wjcChart.FlexChart;
 
@@ -134,28 +135,69 @@ export class StockChangesChartComponent {
   // update chart selection to match portfolio selection
   private _currentChanged(symbol) {
     console.log('Channels: received message "currentChanged"');
-    
-    this.current = this.portfolio.view.items.find(pi => pi.symbol == symbol);
 
-    const chart = this.chart;
-    if (chart) {
-        let selSeries = null;
-        for (let i = 0; i < chart.series.length; i++) {
-            if (chart.series[i].name == symbol) {
-                selSeries = chart.series[i];
-                break;
-            }
-        }
-        chart.selection = selSeries;
+    if (!this.chart) {
+      return;
     }
+
+    if (!this.currentSymbol) {
+      this.currentSymbol = symbol;
+      this._displaySymbol(this.currentSymbol);
+      return;
+    }
+
+    if (symbol == this.currentSymbol) {
+      return;
+    }
+
+    this.currentSymbol = symbol;
+
+    const chartElement = this.chart.hostElement;
+    chartElement.classList.remove('fadein', 'fadeout');
+    chartElement.classList.add('fadein');
+  }
+
+  handleAnimationEnd() {
+    const chartElement = this.chart.hostElement;
+    if (chartElement.classList.contains('fadeout')) {
+
+      chartElement.classList.remove('fadeout');
+    } else if (chartElement.classList.contains('fadein')) {
+
+      chartElement.classList.remove('fadein');
+      chartElement.style.visibility = 'hidden';
+
+      this._displaySymbol(this.currentSymbol);
+
+      chartElement.style.visibility = 'visible';
+      chartElement.classList.add('fadeout'); 
+    }
+  }
+
+  private _getColor(symbol) {
+    const current = this.portfolio.view.items.find(pi => pi.symbol == symbol);
+    return current ? current.color : null;
+  }
+
+  private _displaySymbol(symbol) {
+    const chartSeries = this.chart.series;
+    for (let i = 0; i < chartSeries.length; i++) {
+      if (chartSeries[i].name == symbol) {
+        this.chart.selection = chartSeries[i];
+        break;
+      }
+    }
+    this.currentColor = this._getColor(symbol);
   }
 
   // send notifications about portfolio selection
   async selectionChanged(sender) {
-    const chart = sender;
-    const symbol = chart.selection ? chart.selection.name : null;
+    const selectedSeries = sender.selection;
+    this.currentSymbol = selectedSeries ? selectedSeries.name : null;
+    this.currentColor = this._getColor(this.currentSymbol);
+
     const connection = await this._channelPromise;
-    connection.dispatch(ChannelTopics.SelectionChanged, symbol);
+    connection.dispatch(ChannelTopics.SelectionChanged, this.currentSymbol);
 
     console.log('Channels: sent message "selectionChanged"');
   }

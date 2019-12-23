@@ -1,5 +1,5 @@
 <div class="panel panel-default" *ngIf="portfolio">
-  <div class="panel-heading" [ngStyle]="{'box-shadow': (current ? '0px 0px 20px ' + current.color : 'none')}">
+  <div class="panel-heading" [ngStyle]="{'background-color': currentColor}">
     <div class="align-center">
         <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;{{title}}
     </div>
@@ -27,6 +27,7 @@
                   [chartType]="'Line'"
                   [selectionMode]="'Series'"
                   (selectionChanged)="selectionChanged(chart)"
+                  (animationend)="handleAnimationEnd()"
                   #chart>
       <wj-flex-chart-series *ngFor="let item of portfolio.view.items"
                             [itemsSource]="item.chartData"

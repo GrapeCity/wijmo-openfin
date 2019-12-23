@@ -23,7 +23,6 @@ class App extends React.Component {
       });
     });
 
-    
     this.state = {
       chartPeriod: ChartPeriod.m12,
       chartColor: null
@@ -69,13 +68,13 @@ class App extends React.Component {
     switch(this.state.chartName) {
       case 'hloc':
         return <HlocChart period={this.state.chartPeriod} 
-                          onPeriodChange={(p) => this.changeChartPeriod(p)}
+                          onInitialize={(p, c) => this.handleChartInitialize(p, c)}
                           onColorChange={(c) => this.changeChartColor(c)}
                           storageKey={Config.HLOC_STGKEY} />;
 
       case 'trendline':
         return <TrendlineChart period={this.state.chartPeriod} 
-                          onPeriodChange={(p) => this.changeChartPeriod(p)}
+                          onInitialize={(p, c) => this.handleChartInitialize(p, c)}
                           onColorChange={(c) => this.changeChartColor(c)}
                           storageKey={Config.TRENDLINE_STGKEY} />;
 
@@ -85,9 +84,8 @@ class App extends React.Component {
   }
 
   render() {
-    const chartColor = this.state.chartColor
     const headerStyle = {
-      boxShadow: chartColor ? '0px 0px 20px ' + chartColor : 'none'
+      backgroundColor: this.state.chartColor
     };
     return (
       <div className="panel panel-default">
@@ -117,6 +115,13 @@ class App extends React.Component {
 
   isActiveChartPeriod(value) {
     return this.state.chartPeriod === value;
+  }
+
+  handleChartInitialize(period, color) {
+    this.setState({
+      chartPeriod: period,
+      chartColor: color
+    });
   }
 
   changeChartPeriod(value) {
