@@ -1,6 +1,8 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { ApplicationOption } from 'openfin/_v2/api/application/applicationOption';
 import { Application } from 'openfin/_v2/main';
+import { MonitorInfo } from 'openfin/_v2/api/system/monitor';
+import { _Window } from 'openfin/_v2/api/window/window';
 
 import { ConfigService } from './services/config.service';
 
@@ -23,6 +25,12 @@ export class AppManager {
         this._findRunningApps().then(apps => {
             apps.forEach(app => this._addRunningApp(app));
         });
+    }
+
+    autoSizeCurrent() {
+        fin.Application.getCurrent()
+            .then(app => app.getWindow())
+            .then(win => this._autoSizeWindow(win));
     }
 
     closeMain() {
@@ -92,6 +100,7 @@ export class AppManager {
                 this.changeDetector.detectChanges();
                 console.log(`App '${appId}' has been closed`);
             });
+            app.getWindow().then(win => this._autoSizeWindow(win));
             console.log(`App '${appId}' launched successfully: `, app);
         }).catch(err => {
             this._runningApps.delete(appId);
@@ -119,5 +128,30 @@ export class AppManager {
                     frame: false
                 };
             });
+    }
+
+    private _autoSizeWindow(window: _Window) {
+        fin.System.getMonitorInfo()
+            .then(monitorInfo => {
+                const width = this._getAutoWidth(monitorInfo);
+                const height = this._getAutoHeight(monitorInfo);
+                const options = {
+                    moveIndependently: false
+                }
+                return window.resizeTo(width, height, 'top-left', options);
+            })
+            .catch(err => console.log(err));
+    }
+
+    private _getAutoWidth(monitorInfo: MonitorInfo): number {
+        const rect = monitorInfo.primaryMonitor.availableRect;
+        const monitorWidth = rect.right - rect.left;
+        const k = (monitorWidth > 1680) ? 3 : 2;
+        return monitorWidth/k;
+    }
+
+    private _getAutoHeight(monitorInfo: MonitorInfo): number {
+        const rect = monitorInfo.primaryMonitor.availableRect;
+        return (rect.bottom - rect.top)/2;
     }
 }

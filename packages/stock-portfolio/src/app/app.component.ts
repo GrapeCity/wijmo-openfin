@@ -82,6 +82,7 @@ export class AppComponent {
 
         // create app manager
         this.appManager = new AppManager(configService, changeDetector);
+        this.appManager.autoSizeCurrent();
 
         this.searchCompany = this._searchCompany.bind(this);
         this.formatCompany = this._formatCompany.bind(this);
