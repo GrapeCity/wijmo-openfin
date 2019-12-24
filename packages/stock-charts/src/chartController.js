@@ -1,9 +1,9 @@
-import { ChannelName, ChannelTopics } from 'stock-core';
+import { ChannelName, ChannelTopics, Portfolio } from 'stock-core';
 
 const fin = window.fin;
 
 export class ChartController {
-  
+
   _channelPromise;
 
   /**
@@ -13,10 +13,24 @@ export class ChartController {
   _reconnecting = false;
 
   constructor(props) {
-    this.props = props;
+    this.props = props;    
     this.currentSymbol = null;
 
+    // create portfolio
+    this.portfolio = new Portfolio({
+      storageKey: this.props.storageKey,
+      mapToChartData: this.mapToChartData
+    });
+
     this._initChannel();
+  }
+
+  getChartPeriod() {
+    return this.portfolio.chartPeriod;
+  }
+
+  setChartPeriod(period) {
+    this.portfolio.chartPeriod = period;
   }
 
   _initChannel() {
@@ -58,8 +72,8 @@ export class ChartController {
       const items = response.items;
       console.log('Channels: received response "loadItems". Items: ' + items.length);
       items.forEach(item => {
-        let prices = this.props.parsePrices(item.prices);
-        this.props.portfolio.addItem(item.symbol, item.chart, item.name, item.color, prices);
+        let prices = this.parsePrices(item.prices);
+        this.portfolio.addItem(item.symbol, item.chart, item.name, item.color, prices);
       });
       window.setTimeout(() => {
         this._currentChanged(current);
@@ -72,14 +86,14 @@ export class ChartController {
   _itemAdded(item) {
     console.log('Channels: received message "itemAdded"');
 
-    let prices = this.props.parsePrices(item.prices);
-    this.props.portfolio.addItem(item.symbol, item.chart, item.name, item.color, prices);
+    let prices = this.parsePrices(item.prices);
+    this.portfolio.addItem(item.symbol, item.chart, item.name, item.color, prices);
   }
 
   _itemRemoved(item) {
     console.log('Channels: received message "itemRemoved"');
 
-    this.props.portfolio.removeItem(item.symbol);
+    this.portfolio.removeItem(item.symbol);
   }
 
   // update chart selection to match portfolio selection
@@ -108,6 +122,14 @@ export class ChartController {
     chartElement.classList.add('fadein');
   }
 
+  mapToChartData(first, price) {
+    return price;
+  }
+
+  parsePrices(prices) {
+    return prices;
+  }
+
   handleAnimationStart() {
     // do nothing here
   }
@@ -131,7 +153,7 @@ export class ChartController {
 
   changeCurrent(symbol) {
     /* eslint-disable-next-line eqeqeq */
-    const current = this.props.portfolio.view.items.find(pi => pi.symbol == symbol);
+    const current = this.portfolio.view.items.find(pi => pi.symbol == symbol);    
     this.props.handleCurrentChange(current);
   }
 }

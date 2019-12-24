@@ -2,8 +2,11 @@ import React from 'react';
 import { ChartPeriod } from 'stock-core';
 import Config from './config';
 import AppContext from './appContext';
+import ChartContainer from './chart-container/chartContainer';
 import HlocChart from './hloc-chart/chart';
 import TrendlineChart from './trendline-chart/chart';
+import { HlocChartController } from './hloc-chart/chartController';
+import { TrendlineChartController } from './trendline-chart/chartController';
 import './app.css';
 import financeLogo from './assets/finance.png';
 import reactLogo from './assets/react.svg';
@@ -14,19 +17,45 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    const context = new AppContext();
-    context.chartName.then(chartName => {
-      document.title = this.getTitle(chartName) + ' ' + Config.VERSION;
-      this.setState({
-        chartName: chartName,
-        title: document.title
-      });
-    });
-
+    this.initialized = false;
+    
     this.state = {
       chartPeriod: ChartPeriod.m12,
-      chartColor: null
+      current: null
     };
+
+    const context = new AppContext();
+    context.chartName.then(this.initialize.bind(this));
+  }
+
+  initialize(chartName) {    
+    this.initialized = true;
+    this.chartRef = React.createRef();
+    this.controller = this.createController(chartName);    
+
+    document.title = this.getTitle(chartName) + ' ' + Config.VERSION;
+    this.setState({
+      chartPeriod: this.controller.getChartPeriod(),
+      chartName: chartName,
+      title: document.title
+    });
+  }
+
+  createController(chartName) {
+    const props = {
+      chartRef: this.chartRef,
+      handleCurrentChange: this.handleCurrentChange.bind(this)
+    };
+    switch (chartName) {
+      case 'hloc':
+        return new HlocChartController(props);
+      
+      case 'trendline':
+        return new TrendlineChartController(props);
+
+      default:
+        return null;
+    }
   }
 
   getTitle(chartName) {
@@ -67,16 +96,10 @@ class App extends React.Component {
   renderChart() {
     switch(this.state.chartName) {
       case 'hloc':
-        return <HlocChart period={this.state.chartPeriod} 
-                          onInitialize={(p, c) => this.handleChartInitialize(p, c)}
-                          onColorChange={(c) => this.changeChartColor(c)}
-                          storageKey={Config.HLOC_STGKEY} />;
+        return <HlocChart current={this.state.current} />;
 
       case 'trendline':
-        return <TrendlineChart period={this.state.chartPeriod} 
-                          onInitialize={(p, c) => this.handleChartInitialize(p, c)}
-                          onColorChange={(c) => this.changeChartColor(c)}
-                          storageKey={Config.TRENDLINE_STGKEY} />;
+        return <TrendlineChart current={this.state.current} />;
 
       default:
         return null;          
@@ -84,8 +107,15 @@ class App extends React.Component {
   }
 
   render() {
+    if (!this.initialized) {
+      return (
+        <div className="panel panel-default"></div>
+      );
+    }
+
+    const current = this.state.current;
     const headerStyle = {
-      backgroundColor: this.state.chartColor
+      backgroundColor: current ? current.color : null
     };
     return (
       <div className="panel panel-default">
@@ -107,7 +137,9 @@ class App extends React.Component {
         </div>
         
         <div className="panel-body">
-          {this.renderChart()}
+          <ChartContainer chartRef={this.chartRef} controller={this.controller}>
+            {this.renderChart()}
+          </ChartContainer>
         </div>
       </div>
     );
@@ -117,22 +149,16 @@ class App extends React.Component {
     return this.state.chartPeriod === value;
   }
 
-  handleChartInitialize(period, color) {
-    this.setState({
-      chartPeriod: period,
-      chartColor: color
-    });
-  }
-
   changeChartPeriod(value) {
+    this.controller.setChartPeriod(value);
     this.setState({
       chartPeriod: value
     });
   }
 
-  changeChartColor(value) {
+  handleCurrentChange(value) {
     this.setState({
-      chartColor: value
+      current: value
     });
   }
 
