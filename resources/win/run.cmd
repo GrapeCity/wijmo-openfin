@@ -4,10 +4,15 @@ set "base_dir=%~dp0"
 set "base_dir=%base_dir:~0,-1%"
 set "main_app_dir=%base_dir%\apps\stock-portfolio"
 set "main_app_url=file:///%main_app_dir:\=/%"
+set "pipe_name=wj-stock-portfolio"
 
 CALL :CREATE_MANIFEST
 CALL :CREATE_CFG_FILES
-CALL :RUN_APP
+if /i "%1" EQU "--wait-for-exit" (
+  CALL :RUN_APP_SYNC
+) else (
+  CALL :RUN_APP_ASYNC
+)
 CALL :DONE
 
 GOTO:EOF
@@ -106,12 +111,20 @@ echo }
 
 GOTO:EOF
 
-:RUN_APP
+:RUN_APP_ASYNC
 
 echo "Running OpenFin app ..."
 
-set "pipe_name=wj-stock-portfolio"
 "%base_dir%\OpenFinRVM.exe" --config "%main_app_dir%\app.json" --runtime-arguments=--runtime-information-channel-v6=%pipe_name%
+
+GOTO:EOF
+
+:RUN_APP_SYNC
+
+CALL :RUN_APP_ASYNC
+
+echo "Waiting for OpenFin app to exit ..."
+
 "%base_dir%\node_6.5.0.exe" index.js %pipe_name%
 
 GOTO:EOF

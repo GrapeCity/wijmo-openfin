@@ -463,7 +463,7 @@ const NsisApi = (function() {
                 APP_64: archiveFile,
                 APP_NAME: name,
                 APP_VERSION: version,
-                APP_EXE: 'run.cmd'
+                APP_EXE: 'run.cmd --wait-for-exit'
             };
 
             const commands = {
