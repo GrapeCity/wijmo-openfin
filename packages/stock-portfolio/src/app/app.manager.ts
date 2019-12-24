@@ -144,14 +144,24 @@ export class AppManager {
     }
 
     private _getAutoWidth(monitorInfo: MonitorInfo): number {
+        const indent = 30;
         const rect = monitorInfo.primaryMonitor.availableRect;
         const monitorWidth = rect.right - rect.left;
         const k = (monitorWidth > 1680) ? 3 : 2;
-        return monitorWidth/k;
+        let width = monitorWidth - indent;
+        const correction =  width % k; // correction to avoid rounding error
+        width -= correction;
+        return width/k;
     }
 
     private _getAutoHeight(monitorInfo: MonitorInfo): number {
+        const indent = 20;
         const rect = monitorInfo.primaryMonitor.availableRect;
-        return (rect.bottom - rect.top)/2;
+        const monitorHeight = rect.bottom - rect.top;
+        const k = 2;
+        let height = monitorHeight - indent;
+        const correction =  height % k; // correction to avoid rounding error
+        height -= correction;
+        return height/k;
     }
 }
