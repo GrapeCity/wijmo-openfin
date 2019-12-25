@@ -38,7 +38,7 @@ echo        "frame": false
 echo    },
 echo    "runtime": {
 echo        "arguments": "",
-echo        "version": "stable"
+echo        "version": "14.78.47.21"
 echo    },
 echo    "shortcut": {
 echo        "company": "GrapeCity",
