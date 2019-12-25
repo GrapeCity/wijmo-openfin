@@ -10,7 +10,7 @@
     },
     "runtime": {
         "arguments": "--wj-stockportfolio-chart-hloc",
-        "version": "stable"
+        "version": "14.78.47.21"
     },
     "shortcut": {
         "company": "GrapeCity",
