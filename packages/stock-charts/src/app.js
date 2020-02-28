@@ -119,7 +119,7 @@ class App extends React.Component {
     };
     return (
       <div className="panel panel-default">
-        <div className="panel-heading" style={headerStyle}>
+        <div className={"panel-heading " + (current !== null ? 'selected' : '')} style={headerStyle}>
           <div className="align-center">
             <img className="h-16" src={financeLogo} alt="app logo" />&nbsp;&nbsp;{this.state.title}
           </div>

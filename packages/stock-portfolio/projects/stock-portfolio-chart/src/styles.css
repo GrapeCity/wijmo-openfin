@@ -25,6 +25,10 @@ body
     transition: background-color 0.5s linear;
 }
 
+.panel-heading.selected {
+    color: black;
+}
+
 .panel-heading button {
     -webkit-app-region: no-drag;
 }

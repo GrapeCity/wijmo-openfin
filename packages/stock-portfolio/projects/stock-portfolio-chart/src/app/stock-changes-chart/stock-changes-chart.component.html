@@ -1,5 +1,5 @@
 <div class="panel panel-default" *ngIf="portfolio">
-  <div class="panel-heading" [ngStyle]="{'background-color': currentColor}">
+  <div class="panel-heading" [ngStyle]="{'background-color': currentColor}" [ngClass]="{selected: currentSymbol !== null}">
     <div class="align-center">
         <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;{{title}}
     </div>
