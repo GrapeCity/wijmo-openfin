@@ -2,9 +2,14 @@
 import '@grapecity/wijmo.styles/themes/wijmo.theme.cyborg.css';
 import './index.css';
 
+import * as wjCore from '@grapecity/wijmo';
+import { LicenseKey } from 'stock-core';
+
+// apply Wijmo license key
+wjCore.setLicenseKey(LicenseKey);
+
 import '@grapecity/wijmo.webcomponents.grid';
 
-import * as wjCore from '@grapecity/wijmo';
 import * as wjGrid from '@grapecity/wijmo.grid';
 
 import Config from './config';

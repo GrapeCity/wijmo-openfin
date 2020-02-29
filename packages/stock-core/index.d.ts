@@ -2,6 +2,8 @@ import * as wjcCore from '@grapecity/wijmo';
 
 export declare const Version: string;
 
+export declare const LicenseKey: string;
+
 export declare const ChannelName: string;
 
 export declare class ChannelTopics {
