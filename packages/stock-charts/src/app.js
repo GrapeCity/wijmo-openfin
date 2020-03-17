@@ -1,4 +1,5 @@
 import React from 'react';
+import * as wijmo from '@grapecity/wijmo';
 import { ChartPeriod } from 'stock-core';
 import Config from './config';
 import AppContext from './appContext';
@@ -28,12 +29,19 @@ class App extends React.Component {
     context.chartName.then(this.initialize.bind(this));
   }
 
+  componentDidUpdate() {
+    if (this.initialized && !this.tt) {
+      this.tt = new wijmo.Tooltip();
+      this.tt.setTooltip('.framework-logo', 'Built on React framework');
+    }
+  }
+
   initialize(chartName) {    
     this.initialized = true;
     this.chartRef = React.createRef();
     this.controller = this.createController(chartName);    
 
-    document.title = this.getTitle(chartName) + ' ' + Config.VERSION;
+    document.title = this.getTitle(chartName);
     this.setState({
       chartPeriod: this.controller.getChartPeriod(),
       chartName: chartName,
@@ -118,21 +126,18 @@ class App extends React.Component {
       backgroundColor: current ? current.color : null
     };
     return (
-      <div className="panel panel-default">
+      <div className="panel panel-default">        
         <div className={"panel-heading " + (current !== null ? 'selected' : '')} style={headerStyle}>
           <div className="align-center">
-            <img className="h-16" src={financeLogo} alt="app logo" />&nbsp;&nbsp;{this.state.title}
-          </div>
-          <div className="align-center">
-            <samp>- built on <img className="h-16" src={reactLogo} alt="react logo" /> React -</samp>
           </div>
           <div className="align-center">
             <div className="btn-group btn-group-xs">
               {this.renderChartButtons()}
             </div>
             <div className="window-buttons">
-              {this.renderWindowButtons()}
             </div>
+          </div>
+          <div className="align-center">
           </div>
         </div>
         
@@ -141,6 +146,7 @@ class App extends React.Component {
             {this.renderChart()}
           </ChartContainer>
         </div>
+        <div><img className="h-16 framework-logo" src={reactLogo} alt="react logo" /></div>
       </div>
     );
   }

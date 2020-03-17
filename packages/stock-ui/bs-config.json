@@ -1,0 +1,12 @@
+{
+  "open": false,
+  "port": 3000,
+  "files": ["./src/**/*.{html,css,js}"],
+  "server": { 
+    "baseDir": "./src",
+    "routes": {
+      "/bootswatch": "./node_modules/bootswatch",
+      "/lit-html": "./node_modules/lit-html"
+    }
+  }
+}

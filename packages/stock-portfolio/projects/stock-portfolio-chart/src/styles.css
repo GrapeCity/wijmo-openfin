@@ -8,6 +8,17 @@ body
     font-size: 16px;
 }
 
+.framework-logo {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    opacity: 0.5;
+}
+
+.framework-logo:hover {
+    opacity: 1;
+}
+
 .container-fluid {
     padding: 0;
 }

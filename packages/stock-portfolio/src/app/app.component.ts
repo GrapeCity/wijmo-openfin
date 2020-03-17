@@ -42,7 +42,7 @@ export class AppComponent {
         configService: ConfigService,
         changeDetector: ChangeDetectorRef
     ) {
-        document.title = Config.NAME + ' ' + Config.VERSION;
+        document.title = Config.NAME;
 
         // create portfolio
         this.portfolio = new Portfolio(this.dataService);

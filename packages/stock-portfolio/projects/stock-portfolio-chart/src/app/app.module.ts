@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 
+import { WjCoreModule } from '@grapecity/wijmo.angular2.core';
 import { WjChartModule } from '@grapecity/wijmo.angular2.chart';
 
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    WjCoreModule,
     WjChartModule,
     RouterModule.forRoot(routes, { useHash: true })
   ],

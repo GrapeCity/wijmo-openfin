@@ -17,14 +17,7 @@ import Config from './config';
 window.onload = function () {
 
     // set title
-    document.title = 'Stock Trading ' + Config.VERSION;
-    document.getElementById('theTitle').textContent = document.title;
-
-    document.getElementById('theCloseApp').addEventListener('click', () => {
-        fin.Application.getCurrent()
-            .then(app => app.getWindow())
-            .then(win => win.close(false));
-    });
+    document.title = 'Stock Trading';
 
     // control panel
     var customCells = true;
@@ -46,6 +39,11 @@ window.onload = function () {
 
     // formatItem hander displays cells and keeps track of cell elements
     theGrid.formatItem.addHandler(function (s: any, e: wjGrid.FormatItemEventArgs) {
+
+        // show logo in top left corner
+        if (e.panel == s.topLeftCells) {
+            e.cell.innerHTML = '<img src="assets/webcomponents.png" alt="web components logo" />';
+        }
 
         // show symbols in row headers
         if (e.panel == s.rowHeaders && e.col == 0) {
@@ -73,6 +71,11 @@ window.onload = function () {
             formatCell(e.cell, item, col, false);
         }
     });
+    
+    // show tooltip in top left corner
+    const topleft = theGrid.hostElement.querySelector('.wj-topleft');
+    const tt = new wjCore.Tooltip();
+    tt.setTooltip(topleft, 'Built using Web components');
 
     // custom cell painting
     function formatCell(cell, item, col, flare) {

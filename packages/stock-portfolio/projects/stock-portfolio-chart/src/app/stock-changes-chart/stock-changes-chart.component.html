@@ -1,11 +1,8 @@
+<img class="framework-logo" src="assets/angular.png" alt="angular logo" [wjTooltip]="'Built on Angular framework'" />
 <div class="panel panel-default" *ngIf="portfolio">
   <div class="panel-heading" [ngStyle]="{'background-color': currentColor}" [ngClass]="{selected: currentSymbol !== null}">
     <div class="align-center">
-        <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;{{title}}
-    </div>
-    <div class="align-center">
-        <samp>- built on <img src="assets/angular.png" alt="angular logo" /> Angular -</samp>
-    </div>
+    </div>    
     <div class="align-center">
       <div class="btn-group btn-group-xs">
           <button type="button" class="btn btn-default" (click)="portfolio.chartPeriod=0" [ngClass]="{active: portfolio.chartPeriod == 0}">YTD</button>
@@ -16,8 +13,9 @@
           <button type="button" class="btn btn-default" (click)="portfolio.chartPeriod=7" [ngClass]="{active: portfolio.chartPeriod == 7}">All</button>
       </div>
       <div class="window-buttons">
-          <button type="button" class="close" (click)="closeApp()">&times;</button>
       </div>
+    </div>
+    <div class="align-center">
     </div>
   </div>
 

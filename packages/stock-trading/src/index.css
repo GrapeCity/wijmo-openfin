@@ -34,7 +34,7 @@
 }
 
 .panel-body {
-    height: calc(100vh - 45px);
+    height: calc(100vh - 2px);
     padding: 0;
     overflow: overlay;
 }

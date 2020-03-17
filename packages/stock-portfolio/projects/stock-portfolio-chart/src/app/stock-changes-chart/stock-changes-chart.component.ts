@@ -32,7 +32,7 @@ export class StockChangesChartComponent {
   constructor(
     private changeDetector: ChangeDetectorRef
   ) {
-    document.title = 'Stock Changes ' + Config.VERSION;
+    document.title = 'Stock Changes';
 
     // create portfolio
     this.portfolio = new Portfolio({

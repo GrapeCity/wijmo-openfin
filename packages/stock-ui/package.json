@@ -1,0 +1,17 @@
+{
+  "name": "stock-ui",
+  "version": "1.0.8",
+  "private": true,
+  "scripts": {
+    "start": "lite-server",
+    "update-version": "npm --no-git-tag-version version patch"
+  },
+  "dependencies": {
+    "bootstrap": "3.4.1",
+    "bootswatch": "3.4.1",
+    "lit-html": "1.1.2"
+  },
+  "devDependencies": {
+    "lite-server": "2.5.4"
+  }
+}

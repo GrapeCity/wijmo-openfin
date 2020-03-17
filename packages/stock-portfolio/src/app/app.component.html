@@ -1,11 +1,8 @@
 ﻿<div class="container-fluid" *ngIf="portfolio">
+    <img class="framework-logo" src="assets/angular.png" alt="angular logo" [wjTooltip]="'Built on Angular framework'" />
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="align-center">
-                <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;{{title}}
-            </div>
-            <div class="align-center">
-                <samp>- built on <img src="assets/angular.png" alt="angular logo" /> Angular -</samp>
             </div>
             <div class="align-center">
                 <div class="btn-group btn-group-xs app-buttons">
@@ -15,8 +12,9 @@
                     <button type="button" class="btn btn-default" (click)="appManager.toggleApp('trendline')" [ngClass]="{active: appManager.isAppRunning('trendline')}">Trendline</button>  
                 </div>
                 <div class="window-buttons">
-                    <button type="button" class="close" (click)="appManager.closeMain()">&times;</button>
                 </div>
+            </div>
+            <div class="align-center">                
             </div>
         </div>
         
