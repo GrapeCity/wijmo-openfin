@@ -4,6 +4,7 @@
         "uuid": "stock_portfolio_platform_api_test",
         "applicationIcon": "http://localhost:4200/favicon.ico",
         "autoShow": false,
+        "providerUrl": "http://localhost:3000/platform-provider/index.html",
         "defaultWindowOptions": {
             "url": "http://localhost:3000/platform-window/index.html",
             "contextMenu": true,
