@@ -1,4 +1,9 @@
-import { html, render } from '/lit-html/lit-html.js';
+import 'bootswatch/cyborg/bootstrap.min.css';
+import './index.css';
+
+import { html, render } from 'lit-html/lit-html.js';
+
+import * as core from 'stock-core';
 
 class PlatformWindow extends HTMLElement {
   constructor() {
@@ -16,7 +21,7 @@ class PlatformWindow extends HTMLElement {
           <div class="panel panel-default">
             <div id="title-bar" class="panel-heading">
               <div class="align-center">
-                <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;<span id="theTitle">Stock Portfolio 1.0.8</span>
+                <img class="h-16" src="assets/finance.png" alt="app logo" />&nbsp;&nbsp;<span id="theTitle">Stock Portfolio ${core.Version}</span>
               </div>
               <div class="align-center">
                 <div class="window-buttons">

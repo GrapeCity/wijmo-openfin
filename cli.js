@@ -30,6 +30,10 @@ const cli = (function() {
         srcDir: path.resolve(__dirname, 'packages/stock-trading/dist'),
         destDir: path.resolve(appsDir, 'stock-trading')
     };
+    const stockUI = {
+        srcDir: path.resolve(__dirname, 'packages/stock-ui/dist'),
+        destDir: path.resolve(appsDir, 'stock-ui')
+    };
     const openfinRvm = {
         srcPath: path.resolve(__dirname, 'resources/win/OpenFinRVM.exe'),
         destPath: path.resolve(packageDir, 'OpenFinRVM.exe'),
@@ -118,6 +122,7 @@ const cli = (function() {
                     copyDir(stockPortfolio.srcDir, stockPortfolio.destDir),
                     copyDir(stockCharts.srcDir, stockCharts.destDir),
                     copyDir(stockTrading.srcDir, stockTrading.destDir),
+                    copyDir(stockUI.srcDir, stockUI.destDir),
                     copyFile(openfinRvm.srcPath, openfinRvm.destPath),
                     copyFile(openfinLauncher.srcPath, openfinLauncher.destPath),
                     copyFile(node.srcPath, node.destPath),

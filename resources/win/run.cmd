@@ -21,24 +21,117 @@ GOTO:EOF
 
 echo "Generating app manifest file ..."
 
+set "ui_app_dir=%base_dir%\apps\stock-ui"
+set "ui_app_url=file:///%ui_app_dir:\=/%"
+set "portfolio_chart_app_dir=%base_dir%\apps\stock-portfolio-chart"
+set "portfolio_chart_app_url=file:///%portfolio_chart_app_dir:\=/%"
+set "charts_app_dir=%base_dir%\apps\stock-charts"
+set "charts_app_url=file:///%charts_app_dir:\=/%"
+set "trading_app_dir=%base_dir%\apps\stock-trading"
+set "trading_app_url=file:///%trading_app_dir:\=/%"
+
 (
 echo {
 echo    "devtools_port": 9090,
-echo    "startup_app": {
-echo        "name": "Stock Portfolio",
-echo        "description": "A financial OpenFin application that was developed using GrapeCity's Wijmo controls",
-echo        "url": "%main_app_url%/index.html",
-echo        "icon": "%main_app_url%/favicon.ico",
-echo        "uuid": "3f1eb5a5-0ad9-4bf2-9660-0a5719c11c5c",
-echo        "autoShow": true,
-echo        "saveWindowState": true,
-echo        "taskbarIconGroup": "ade6c57c-14f2-4c6d-802b-bee130ca432d",
-echo        "maximizable": false,
-echo        "frame": false
+echo    "platform": {
+echo        "uuid": "stock_portfolio_platform_api_test",
+echo        "applicationIcon": "%main_app_url%/favicon.ico",
+echo        "autoShow": false,
+echo        "providerUrl": "%ui_app_url%/platform-provider/index.html",
+echo        "defaultWindowOptions": {
+echo            "url": "%ui_app_url%/platform-window/index.html",
+echo            "contextMenu": true,
+echo            "saveWindowState": false,
+echo            "backgroundThrottling": true
+echo        }
+echo    },
+echo    "snapshot": {        
+echo        "windows": [
+echo            {
+echo                "defaultWidth": 1200,
+echo                "defaultHeight": 800,
+echo                "defaultLeft": 0,
+echo                "defaultTop": 0,
+echo                "layout": {
+echo                    "content": [
+echo                        {
+echo                            "type": "column",
+echo                            "content": [
+echo                                {
+echo                                    "type": "row",
+echo                                    "content": [
+echo                                        {
+echo                                            "type": "component",
+echo                                            "componentName": "view",
+echo                                            "componentState": {
+echo                                                "name": "component_stock_portfolio",
+echo                                                "url": "%main_app_url%/index.html"
+echo                                            }
+echo                                        },
+echo                                        {
+echo                                            "type": "component",
+echo                                            "componentName": "view",
+echo                                            "componentState": {
+echo                                                "name": "component_stock_changes_chart",
+echo                                                "url": "%portfolio_chart_app_url%/index.html#/changes"
+echo                                            }
+echo                                        }
+echo                                    ]
+echo                                },
+echo                                {
+echo                                    "type": "row",
+echo                                    "content": [
+echo                                        {
+echo                                            "type": "component",
+echo                                            "componentName": "view",
+echo                                            "componentState": {
+echo                                                "name": "component_stock_trading",
+echo                                                "url": "%trading_app_url%/index.html"
+echo                                            }
+echo                                        }
+echo                                    ]
+echo                                }
+echo                            ]
+echo                        }                        
+echo                    ]
+echo                }
+echo            },
+echo            {
+echo                "defaultWidth": 600,
+echo                "defaultHeight": 800,
+echo                "defaultLeft": 1000,
+echo                "defaultTop": 100,
+echo                "layout": {
+echo                    "content": [
+echo                        {
+echo                            "type": "column",
+echo                            "content": [
+echo                                {
+echo                                    "type": "component",
+echo                                    "componentName": "view",
+echo                                    "componentState": {
+echo                                        "name": "component_stock_hloc_chart",
+echo                                        "url": "%charts_app_url%/index.html"
+echo                                    }
+echo                                },
+echo                                {
+echo                                    "type": "component",
+echo                                    "componentName": "view",
+echo                                    "componentState": {
+echo                                        "name": "component_stock_trendline_chart",
+echo                                        "url": "%charts_app_url%/index.html"
+echo                                    }
+echo                                }
+echo                            ]
+echo                        }                        
+echo                    ]
+echo                }
+echo            }
+echo        ]
 echo    },
 echo    "runtime": {
-echo        "arguments": "",
-echo        "version": "14.78.47.21"
+echo        "arguments": "--v=1 --inspect",
+echo        "version": "canary"
 echo    },
 echo    "shortcut": {
 echo        "company": "GrapeCity",
@@ -47,14 +140,8 @@ echo        "icon": "%main_app_url%/favicon.ico",
 echo        "name": "Stock Portfolio"
 echo    },
 echo    "services": [
-echo        {"name": "layouts"},
 echo        {"name": "notifications"}
-echo    ],
-echo    "features": {
-echo        "snap": true,
-echo        "dock": true,
-echo        "tab": true
-echo    }
+echo    ]
 echo }
 ) > "%main_app_dir%\app.json"
 
